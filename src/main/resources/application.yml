@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: stream_two
+  rabbitmq:
+    addresses: amqp://192.168.36.129:5772
+    username:  user
+    password: 123456
+
+
+  cloud:
+    stream:
+      bindings:
+         input:
+           group: Service-A
+           destination: greetings
+           consumer:
+             partitioned: true
+      instanceCount: 1
+      instanceIndex: 1
+
+server:
+  port: 8190
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8181/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
